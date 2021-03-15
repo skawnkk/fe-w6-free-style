@@ -1,0 +1,14 @@
+body {
+  background: rgb(25, 31, 44);
+  color: rgb(183, 193, 204);
+  border-color: rgb(200, 201, 205);
+  font-family: 'Noto Sans KR', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  /* element.style */
+  margin: 0;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
