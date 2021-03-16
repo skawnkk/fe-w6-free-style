@@ -14,10 +14,13 @@ apiRouter.post("/", function (req, res) {
 
   const userRequest = req.body.userRequest;
   const userId = userRequest.user.id;
+  console.log(userId);
   const userAnswer = userRequest.utterance;
 
   if (startUtterances.some((e) => e === userAnswer)) {
-    if (userAnswer === startUtterances[0]) users = registerNewUser(users, userId, initScore);
+    if (userAnswer === startUtterances || !users.has(userId)) users = registerNewUser(users, userId, initScore);
+    // if (!users.has(userId)) users = registerNewUser(users, userId, initScore);
+    // if (userAnswer === startUtterances[0]) users = registerNewUser(users, userId, initScore);
 
     const index = users.get(userId).index;
 
@@ -25,20 +28,17 @@ apiRouter.post("/", function (req, res) {
     if (index === questions.length) {
       // create url including user's result, then send it to chatbot as a message
       const userValue = users.get(userId);
-      const scoreArr = [userValue["0"], userValue["1"], userValue["2"], userValue["3"]];
-      const scores = scoreArr.reduce((prev, curr) => {
-        const currArr = Object.entries(curr);
-        const score = currArr.reduce((acc, val) => {
-          const [key, value] = val;
-          acc += value;
-          return acc;
-        }, ``);
-        prev += score;
-        return prev;
-      }, ``);
-
+      const scoreArr = [userValue["0"].E, userValue["0"].I, userValue["1"].S, userValue["1"].N, userValue["2"].T, userValue["2"].F, userValue["3"].J, userValue["3"].P];
+      const scores = scoreArr.reduce((acc, val) => acc + val, ``);
       const result = userValue.result.join("");
-      const url = `http://34.64.132.100:3000/api/result?type=${result}&scores=${scores}`;
+
+      console.log(userValue);
+      console.log(scoreArr);
+      console.log(scores);
+      console.log(result);
+
+      const url = `http://34.64.132.100:3000/result?type=${result}&scores=${scores}`;
+      // const url = `http://34.64.132.100:3000/api/result?type=${result}&scores=${scores}`;
       const responseBody = {
         version: "2.0",
         template: {
@@ -51,8 +51,9 @@ apiRouter.post("/", function (req, res) {
           ],
         },
       };
-      res.status(200).json(responseBody);
       users = deleteUser(users, userId);
+      console.log(users);
+      res.status(200).json(responseBody);
     } else {
       const responseBody = createResponseBody(questions, index);
       res.status(200).json(responseBody);
@@ -110,11 +111,11 @@ apiRouter.post("/", function (req, res) {
   }
 });
 
-apiRouter.get("/result", function (req, res, next) {
-  const type = req.query.type;
-  const scores = req.query.scores;
-  console.log(type, scores);
-  res.send({ type, scores });
-});
+// apiRouter.get("/result", function (req, res, next) {
+//   const type = req.query.type;
+//   const scores = req.query.scores;
+//   console.log(type, scores);
+//   res.send({ type, scores });
+// });
 
 module.exports = apiRouter;
