@@ -1,14 +1,18 @@
-import express from 'express';
-import ejs from 'ejs';
-import path from 'path';
-import dotenv from 'dotenv';
+const express = require('express');
+const ejs = require('ejs');
+const path = require('path');
+const dotenv = require('dotenv');
+const { sequelize } = require("./models");
 
-import indexRouter from './routes/index.js';
+const vendorsRouter = require('./routes/vendors.js');
+const indexRouter = require('./routes/index.js');
+const authRouter = require('./routes/auth.js');
+const todoRouter = require('./routes/todo.js');
 
-const __dirname = path.resolve();
+const app = express();
+sequelize.sync(); 
 
 dotenv.config();
-const app = express();
 
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
@@ -16,10 +20,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('port', process.env.SERVER_PORT || 4000);
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/', indexRouter);
+app.use('/vendors', vendorsRouter);
+app.use('/', indexRouter); 
+app.use('/auth', authRouter); 
+app.use('/todo', todoRouter); 
 
 const port = app.get('port');
 app.listen(port, () => console.log(`http://localhost:${port}`));
 
-export default app;
+module.exports = app;
