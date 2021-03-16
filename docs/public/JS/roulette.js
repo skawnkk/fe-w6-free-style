@@ -4,7 +4,7 @@ export class Roulette {
 		this.data = data;
 		this.ctx = data.canvas.getContext("2d");
 		this.sumPizza = 3; //초기html렌더링시 설정된 조각 개수
-		this.maxPizza = 5;
+		this.maxPizza = 6;
 		this.deg = 0; // 초기각도
 		this.init();
 	}
@@ -15,8 +15,8 @@ export class Roulette {
 	}
 
 	drawWheel() {
-		const color = ["lightcoral", "powderblue", "khaki", "palegreen", "peachpuff"];
-		let lastLocation = 0;
+		const color = ["lightcoral", "powderblue", "khaki", "palegreen", "peachpuff", "plum"];
+		let lastLocation = -2 * Math.PI * 1/4; // 초기값을 화살표와
 		for (let i = 1; i <= this.sumPizza; i++) {
 			this.ctx.beginPath();
 			this.ctx.lineTo(this.data.xLocation, this.data.yLocation);
@@ -31,10 +31,10 @@ export class Roulette {
 	}
 
 	drawItem() {
-		const items = [..._.$A("input", this.data.rouletteItem)].map((e) => e.value);
-		console.log(items);
-		const modifier = Math.PI / this.sumPizza;
+		const items = [..._.$a("input", this.data.rouletteItem)].map((e) => e.value);
+		const modifier = Math.PI / this.sumPizza -2 * Math.PI * 1/4;
 		const maxWidth = 80 + 60 / this.sumPizza;
+		this.ctx.font = "20px gothic"
 		this.ctx.textAlign = "center";
 		this.ctx.textBaseline = "middle";
 		this.ctx.fillStyle = "black";
@@ -78,12 +78,13 @@ export class Roulette {
 	resetRotate() {
 		this.data.canvas.style.transition = "0ms";
 		this.data.canvas.style.transform = "rotate(0)";
+		this.deg = 0;
 	}
 
 	addEvent() {
-		_.E(this.data.plusButton, "click", this.plusPizza.bind(this));
-		_.E(this.data.minusButton, "click", this.minusPizza.bind(this));
-		_.E(this.data.rollButton, "click", this.rotate.bind(this));
-		_.E(this.data.setButton, "click", this.drawItem.bind(this));
+		_.on(this.data.plusButton, "click", this.plusPizza.bind(this));
+		_.on(this.data.minusButton, "click", this.minusPizza.bind(this));
+		_.on(this.data.rollButton, "click", this.rotate.bind(this));
+		_.on(this.data.setButton, "click", this.drawItem.bind(this));
 	}
 }
