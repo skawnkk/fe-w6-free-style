@@ -1,54 +1,69 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
-var path = require('path');
 
 const request = require('request');
 const cheerio = require("cheerio");
 const News = require('../../model/main_schema');
 
-
-const resultArr = [];
-
-router.get('/naver_news', async (req, res) => {
-   console.log(res)
-   try {
-      const news = await News.find();
-      console.log(news)
-   } catch (err) {
-      res.json({
-         message: err
-      })
-   }
-})
+//*DB받아오기 : 아직 비활성.
+// router.get('/naver_news', async (req, res) => {
+//    console.log(res)
+//    try {
+//       const news = await News.find();
+//    } catch (err) {
+//       res.json({
+//          message: err
+//       })
+//    }
+// })
 
 router.post('/naver_news', (req, res) => {
-   console.log('in')
-   var word = encodeURI(req.body.searchTarget);
+   var word = encodeURI(req.body.value);
    const url = `https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=qkd&qdt=0&ie=utf8&query=${word}`;
-
+   const resultArr = [];
    try {
       request(url, function (err, _, body) {
          const $ = cheerio.load(body)
-         for (let i = 0; i < $('.list_news .bx').length; i++) {
-            const $target = $('.list_news .bx').find('.news_wrap .news_area > a');
-            const $href = $target[i].attribs.href;
-            const $title = $target[i].attribs.title;
+         const $target = $('.list_news .bx')
+         const $bodyInfo = $target.find('.news_wrap .news_area > a');
+         const $bodyDesc = $target.find('.news_wrap > div > div.news_dsc > div > a');
+         const $bodyImg = $target.find('.news_wrap > a> img')
 
-            resultArr.push([req.body.searchTarget, $title, $href])
-         }
-         makeCard(resultArr)
-         //res.send(resultArr)
+         for (let i = 0; i < $target.length; i++) {
+            let descArr = [];
+            for (let j = 0; j < $bodyDesc[i].children.length; j++) {
+               let desc = $bodyDesc[i].children[j].data;
+               if (desc === undefined) desc = req.body.value;
+               descArr.push(desc);
+            }
+            const redesignDesc = descArr.reduce((acc, curr) => {
+               acc += curr
+               return acc
+            }, '')
+            console.log(redesignDesc)
 
-         for (let i = 0; i < resultArr.length; i++) {
-            const news = new News({
-               search: resultArr[i][0],
-               title: resultArr[i][1],
-               href: resultArr[i][2],
-               //date: Date.now() -> default
-            });
-            news.save();
+            const obj = {
+               'target': req.body.value,
+               'title': $bodyInfo[i].attribs.title,
+               'link': $bodyInfo[i].attribs.href,
+               'img': $bodyImg[i].attribs.src,
+               'desc': redesignDesc
+            };
+            resultArr.push(obj);
          }
+         res.json(resultArr)
+
+         //*DB작업:아직비활성
+         // for (let i = 0; i < resultArr.length; i++) {
+         //    const news = new News({
+         //       search: resultArr[i][0],
+         //       title: resultArr[i][1],
+         //       href: resultArr[i][2],
+         //       //date: Date.now() -> default
+         //    });
+         //    news.save();
+         // }
       })
    } catch (err) {
       res.json({

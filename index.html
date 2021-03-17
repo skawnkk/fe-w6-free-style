@@ -8,23 +8,34 @@
       <title>Document</title>
    </head>
 
-   <body>
-      <h1>늬우스</h1>
-      <div>회원 모집</div>
+   <style>
+      .naver_news {
+         display: flex;
 
-      <div class='result2'></div>
+      }
+
+      .card_tpl a {
+         display: block;
+         text-decoration: none;
+      }
+   </style>
+
+   <body>
       <section>
          <p>당신의 아티스트를 입력해주세요 : )</p>
-         <form action="/news/naver_news" method="POST">
+
+         <input class="search_target" type="text">
+         <button class="search_btn">소식받기</button>
+
+         <!-- <form action="/news/naver_news" method="POST">
             <input type="text" name="searchTarget"><input type="submit">
-         </form>
+         </form> -->
       </section>
       <section>
          <div class="naver_news"></div>
       </section>
 
-      <script type="module" src="mail.js"></script>
-      <script type="module" src="search.js"></script>
+      <script type="module" src="main.js"></script>
    </body>
 
 </html>
