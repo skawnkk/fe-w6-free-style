@@ -12,21 +12,16 @@
       <h1>늬우스</h1>
       <div>회원 모집</div>
 
-      <div>이메일소식 받기</div>
-      <form action="/email/post" method="POST">
-         이메일주소: <input type="text" name="email"><input type="submit">
-      </form>
-
-      <button class="ajaxsend">ajaxsend</button>
-      <div class='result'></div>
-
-      <form action="/search" method="POST">
-         <input type="text" name="search"><input type="submit" value="검색">
-      </form>
-
-      <button class='fetch'>data_바로받기</button>
       <div class='result2'></div>
-
+      <section>
+         <p>당신의 아티스트를 입력해주세요 : )</p>
+         <form action="/news/naver_news" method="POST">
+            <input type="text" name="searchTarget"><input type="submit">
+         </form>
+      </section>
+      <section>
+         <div class="naver_news"></div>
+      </section>
 
       <script type="module" src="mail.js"></script>
       <script type="module" src="search.js"></script>

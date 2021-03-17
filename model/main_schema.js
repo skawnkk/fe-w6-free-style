@@ -6,7 +6,8 @@ const {
 
 
 var NewsSchema = new Schema({
-   title: Object,
+   search: String,
+   title: String,
    href: String,
    send_date: {
       type: Date,
