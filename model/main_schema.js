@@ -6,16 +6,20 @@ const {
 
 
 var NewsSchema = new Schema({
-   title: String,
+   title: Object,
    href: String,
    send_date: {
       type: Date,
       default: Date.now
    }
 }, {
+   timestamps: true
+}, {
    writeConcern: {
+      w: 'majority',
+      fsync: true,
       j: true,
-      witemout: 1000
+      witemout: 2500
    }
 });
 

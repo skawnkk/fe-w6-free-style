@@ -7,7 +7,7 @@ const request = require('request');
 const cheerio = require("cheerio");
 const News = require('../../model/main_schema');
 
-//const resultArr = [];
+const resultArr = [];
 
 router.get('/naver_news', async (req, res) => {
    try {
@@ -20,27 +20,31 @@ router.get('/naver_news', async (req, res) => {
    }
 })
 
-
-router.post('/naver_news', async (req, res) => {
+router.post('/naver_news', (req, res) => {
    console.log('in')
+   var word = encodeURI("방탄소년단");
+   const url = `https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=qkd&qdt=0&ie=utf8&query=${word}`;
 
    try {
-      var word = encodeURI("방탄소년단");
-      const url = `https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=qkd&qdt=0&ie=utf8&query=${word}`;
-      const dataToSave = new News({
-         title: $title,
-         href: $href,
-      })
-      request(url, async function (err, _, body) {
+      request(url, function (err, _, body) {
          const $ = cheerio.load(body)
-
          for (let i = 0; i < $('.list_news .bx').length; i++) {
             const $target = $('.list_news .bx').find('.news_wrap .news_area > a');
             const $href = $target[i].attribs.href;
             const $title = $target[i].attribs.title;
-            const resultArr = await dataToSave.save();
+
+            resultArr.push([$title, $href])
          }
+
          res.send(resultArr)
+         for (let i = 0; i < resultArr.length; i++) {
+            const news = new News({
+               title: resultArr[i][0],
+               href: resultArr[i][1],
+               //date: Date.now() -> default
+            });
+            news.save();
+         }
       })
    } catch (err) {
       res.json({
@@ -48,4 +52,5 @@ router.post('/naver_news', async (req, res) => {
       })
    }
 })
+
 module.exports = router;

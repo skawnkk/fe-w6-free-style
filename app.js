@@ -1,5 +1,4 @@
 var express = require('express');
-var crawling = require('./crawling.js')
 var app = express();
 var bodyParser = require('body-parser');
 var router = require("./router/index");
@@ -22,10 +21,10 @@ app.set('view engine', 'ejs')
 app.use(router) //main접속시 main_router로 이동
 
 //몽고DB
-mongoose.connect(process.env.MONGODB_URL, {
-   useNewUrlParser: true,
-   useUnifiedTopology: true
-});
+// mongoose.connect(process.env.MONGODB_URL, {
+//    useNewUrlParser: true,
+//    useUnifiedTopology: true
+// });
 
 var db = mongoose.connection;
 db.on('error', console.error);
@@ -34,3 +33,7 @@ db.once('open', function () {
    console.log("Connected to mongod server");
 });
 
+mongoose.connect('mongodb://localhost/mongodb_tutorial', {
+   useNewUrlParser: true,
+   useUnifiedTopology: true
+})
