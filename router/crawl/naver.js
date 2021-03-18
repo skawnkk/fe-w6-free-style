@@ -31,7 +31,9 @@ router.post('/naver_news', (req, res) => {
          const $bodyImg = $target.find('.news_wrap > a> img')
 
          for (let i = 0; i < $target.length; i++) {
+
             let descArr = [];
+
             for (let j = 0; j < $bodyDesc[i].children.length; j++) {
                let desc = $bodyDesc[i].children[j].data;
                if (desc === undefined) desc = req.body.value;
@@ -41,8 +43,6 @@ router.post('/naver_news', (req, res) => {
                acc += curr
                return acc
             }, '')
-            console.log(redesignDesc)
-
             const obj = {
                'target': req.body.value,
                'title': $bodyInfo[i].attribs.title,
@@ -54,16 +54,18 @@ router.post('/naver_news', (req, res) => {
          }
          res.json(resultArr)
 
-         //*DB작업:아직비활성
-         // for (let i = 0; i < resultArr.length; i++) {
-         //    const news = new News({
-         //       search: resultArr[i][0],
-         //       title: resultArr[i][1],
-         //       href: resultArr[i][2],
-         //       //date: Date.now() -> default
-         //    });
-         //    news.save();
-         // }
+         //*DB작업
+         for (let i = 0; i < resultArr.length; i++) {
+            const news = new News({
+               search: resultArr[i].target,
+               title: resultArr[i].title,
+               href: resultArr[i].link,
+               img: resultArr[i].img,
+               desc: resultArr[i].desc,
+
+            });
+            news.save();
+         }
       })
    } catch (err) {
       res.json({

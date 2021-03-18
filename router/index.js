@@ -3,12 +3,14 @@ var app = express();
 var router = express.Router();
 var path = require('path');
 
-var news_router = require("./crawl/naver")
+var news_router = require("./crawl/r_naver")
+var comment_router = require("./r_comment")
 
 router.get('/', (req, res) => {
    res.sendFile(path.join(__dirname, '../index.html'))
 })
 
 router.use('/news', news_router)
+router.use('/comment', comment_router)
 
 module.exports = router;

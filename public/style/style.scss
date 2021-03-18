@@ -1,0 +1,146 @@
+@import './reset.css';
+
+$c-basic: rgba(48, 48, 48, 0.979);
+$c-main: rgb(255, 255, 255);
+$c-support:rgb(11, 230, 193);
+$c-hover: rgba(48, 48, 48, 0.459);
+
+$m-basic: 20px;
+$p-basic: 10px;
+
+@mixin padding{
+   padding-bottom: 15px;
+}
+
+.clearfix::after {
+   content: "";
+   clear: both;
+   display: block;
+}
+
+.hide {
+   display: none !important;
+}
+
+.under{
+   color: transparent !important;
+}
+
+body {
+   font-family: 'Gothic A1', sans-serif;
+   color: $c-basic;
+   background-color: $c-main;
+}
+
+.input_section{
+
+   padding: 50px;
+   color: $c-main;
+   font-weight: bold;
+   font-size:large;
+   background-color: $c-support;
+   margin-bottom: $m-basic;
+   .input_wrap{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      div{
+         display: flex;
+         align-items: baseline;
+         .search_window{
+            color: $c-main;
+            font-size: large;
+            margin-top: $m-basic;
+            margin-right: $m-basic/2;
+            padding-left: $p-basic;
+            height: 40px;
+            background-color: transparent;
+            border:none;
+            border-bottom: 3px solid $c-main;
+            &:focus{
+               outline: 3px solid $c-main;
+               border-bottom: none;
+            }
+         
+         }
+         .search_btn{
+            padding: $p-basic;
+            border: 3px solid $c-main;
+            &:hover{
+               background-color:$c-hover;
+               cursor: pointer;
+            }
+
+         }
+
+      }
+   }
+}
+.paste_section{
+   margin-top: $m-basic;
+   
+   .naver_news {
+      display: flex;
+      
+   }
+
+   .card_tpl {
+      width: 264px;
+      padding: 20px;
+      border: 1px solid $c-hover;
+      border-radius: 20px;
+      & > div{
+         float: right;
+         position: relative;
+         top:-23px;
+      }
+      a {
+         display: block;
+         text-decoration: none;
+         @include padding;
+
+         &:hover{
+            text-decoration: underline;
+         }
+
+         div{
+            @include padding;
+            img{
+               @include padding;
+            }
+         }
+      }
+      .desc{
+         @include padding;
+      }
+      .memo{
+         text-align: center;
+         cursor: pointer;
+         .show_memo{
+            color: $c-hover;
+            position: inherit;
+            right:23px;
+            bottom:-13px;
+         }
+         .input_memo{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            input{
+               width: 217px;
+               position: relative;
+               left: -11px;
+               top: 9px;
+               border: 1px solid $c-hover;
+            }
+            div{
+               border: 1px solid $c-hover;
+               font-size: small;
+               position: relative;
+               top: 9px;
+               left: -8px;
+            }
+         }
+      }
+   }
+}

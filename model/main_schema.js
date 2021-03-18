@@ -9,9 +9,15 @@ var NewsSchema = new Schema({
    search: String,
    title: String,
    href: String,
-   send_date: {
-      type: Date,
-      default: Date.now
+   img: String,
+   desc: String,
+   comment: {
+      type: String,
+      default: ''
+   },
+   keep: {
+      type: Boolean,
+      default: false
    }
 }, {
    timestamps: true
