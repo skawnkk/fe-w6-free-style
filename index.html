@@ -6,31 +6,22 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Document</title>
+      <link rel="stylesheet" href="/style/style.css">
+      <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap" rel="stylesheet">
    </head>
 
-   <style>
-      .naver_news {
-         display: flex;
-      }
-
-      .card_tpl a {
-         display: block;
-         text-decoration: none;
-      }
-   </style>
-
    <body>
-      <section>
-         <p>당신의 아티스트를 입력해주세요 : )</p>
-
-         <input class="search_target" type="text">
-         <button class="search_btn">소식받기</button>
-
-         <!-- <form action="/news/naver_news" method="POST">
-            <input type="text" name="searchTarget"><input type="submit">
-         </form> -->
+      <section class="input_section">
+         <div class="input_wrap">
+            <p>당신의 아티스트를 입력하세요 : )</p>
+            <div>
+               <input class="search_window" type="text">
+               <div class="search_btn hide" typle="button">소식받기</div>
+            </div>
+         </div>
       </section>
-      <section>
+
+      <section class="paste_section">
          <div class="naver_news"></div>
       </section>
 

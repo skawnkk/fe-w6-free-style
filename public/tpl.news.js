@@ -1,5 +1,5 @@
 export function makeCard(arr) {
-   console.log(arr)
+
    const paste_section = document.querySelector('.naver_news');
    const tpl =
       `<div class="card_tpl">

@@ -26,7 +26,6 @@ const commentSave = (inputMode) => {
    })
 }
 
-
 const switchMode = (target) => {
    const parents = target.parentNode;
    const showMode = target;

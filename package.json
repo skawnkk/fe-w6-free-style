@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node-sass public/style/style.scss public/style/style.css && node-sass --watch public/style/style.scss public/style/style.css"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,9 @@
     "mongodb": "^3.6.4",
     "mongoose": "^5.12.0",
     "node-fetch": "^2.6.1",
-    "request": "^2.88.2"
+    "node-sass": "^5.0.0",
+    "request": "^2.88.2",
+    "sass": "^1.32.8"
   },
   "devDependencies": {},
   "keywords": [],
