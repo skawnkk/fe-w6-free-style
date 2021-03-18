@@ -33,7 +33,7 @@ body {
 }
 
 .input_section{
-
+   margin: 0 auto;
    padding: 50px;
    color: $c-main;
    font-weight: bold;
@@ -77,10 +77,14 @@ body {
    }
 }
 .paste_section{
+ 
    margin-top: $m-basic;
    
    .naver_news {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: 1300px;
+      margin: 0 auto;
       
    }
 
