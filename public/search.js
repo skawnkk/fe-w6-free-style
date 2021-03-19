@@ -25,7 +25,8 @@ export const searchEvent = () => {
 
    searchBtn.addEventListener('click', () => {
       const inputData = searchWindow.value;
-      sendAjax('http://localhost:3000/news/naver_news', inputData, makeCard);
+      const url = 'http://localhost:3000/news/naver_news';
+      sendAjax('POST', url, inputData, makeCard);
    })
 
 }

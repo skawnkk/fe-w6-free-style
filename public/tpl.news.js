@@ -3,6 +3,7 @@ import {
 } from "./utill.js";
 
 export function makeCard(arr) {
+
    const paste_section = _.$('.naver_news');
    const tpl =
       `<div class="card_tpl">

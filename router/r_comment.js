@@ -6,10 +6,25 @@ const request = require('request');
 const cheerio = require("cheerio");
 const News = require('../model/main_schema');
 
-console.log('linked')
+router.post('/save', async (req, res) => {
 
-router.post('/save', (req, res) => {
-   console.log("??", req.body)
+   const {
+      targetUrl,
+      save,
+      comment
+   } = req.body.value;
+
+   const filter = {
+      href: targetUrl
+   }
+   const update = {
+      keep: save,
+      comment: comment
+   }
+
+   await News.findOneAndUpdate(filter, update, {
+      new: true
+   });
 })
 
 module.exports = router;

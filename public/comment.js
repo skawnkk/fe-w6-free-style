@@ -41,7 +41,7 @@ const commentSave = (inputMode) => {
          'comment': comment
       }
       const url = 'http://localhost:3000/comment/save';
-      sendAjax(url, obj, null);
+      sendAjax('POST', url, obj, null);
    })
 }
 

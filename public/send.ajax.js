@@ -1,16 +1,17 @@
-export const sendAjax = (url, data, func) => {
+export const sendAjax = (METHOD, url, data, func) => {
    let dataForm = {
       'value': data,
    }
    let dataToSend = JSON.stringify(dataForm);
    const xhr = new XMLHttpRequest();
-   xhr.open('POST', url);
+   xhr.open(METHOD, url);
    xhr.setRequestHeader('Content-Type', 'application/json');
    xhr.send(dataToSend);
 
    xhr.addEventListener('load', function () {
       let result = xhr.responseText;
       result = JSON.parse(result);
+      console.log(result)
       result.forEach(func);
    })
 }

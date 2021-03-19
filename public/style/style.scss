@@ -40,6 +40,12 @@ body {
    font-size:large;
    background-color: $c-support;
    margin-bottom: $m-basic;
+   .mykeep{
+      position: absolute;
+      top: 0;
+      right: 310px;
+      color: $c-basic;
+   }
    .input_wrap{
       display: flex;
       flex-direction: column;
@@ -91,6 +97,7 @@ body {
    .card_tpl {
       width: 264px;
       padding: 20px;
+      margin: $m-basic;
       border: 1px solid $c-hover;
       border-radius: 20px;
       & > div{
