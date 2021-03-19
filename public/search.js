@@ -8,8 +8,6 @@ import {
    sendAjax
 } from "./send.ajax.js";
 
-
-
 export const searchEvent = () => {
    const searchWindow = _.$('.search_window');
    const searchBtn = _.$('.search_btn');
@@ -28,5 +26,4 @@ export const searchEvent = () => {
       const url = 'http://localhost:3000/news/naver_news';
       sendAjax('POST', url, inputData, makeCard);
    })
-
 }
