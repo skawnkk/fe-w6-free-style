@@ -9,7 +9,7 @@ var keep_router = require("./r_keep");
 const News = require('../model/main_schema');
 
 router.get('/', async (req, res) => {
-   //db에서 unkeep삭제
+
    const filter = {
       keep: false
    }

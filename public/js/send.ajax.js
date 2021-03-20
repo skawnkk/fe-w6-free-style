@@ -13,7 +13,6 @@ export const sendAjax = (METHOD, url, data, func) => {
    xhr.addEventListener('load', function () {
       let result = xhr.responseText;
       result = JSON.parse(result);
-      console.log(result)
       result.forEach(func);
    })
 }

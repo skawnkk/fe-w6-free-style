@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 
 
 app.listen(3000, function () {
-   console.log('started')
+   console.log('🎉started')
 })
 
 app.use(express.static('public'))
@@ -28,5 +28,6 @@ db.once('open', function () {
 
 mongoose.connect('mongodb://localhost/mongodb_tutorial', {
    useNewUrlParser: true,
-   useUnifiedTopology: true
+   useUnifiedTopology: true,
+   useFindAndModify: false
 })

@@ -65,7 +65,7 @@ function handleDragEnd({
 
 
 
-export const drag = () => {
+export const dragAndDrop = () => {
    const draggables = _.$All('.card_tpl');
    draggables.forEach(el => el.addEventListener('dragstart', handleDragStart, false))
    draggables.forEach(el => el.addEventListener('dragenter', handleDragEnter, false))

@@ -3,7 +3,7 @@ import {
 } from "./search.js";
 import {
    observeNode
-} from "./comment.js";
+} from "./observer.js";
 import {
    loadKeepData
 } from "./keep.js";
