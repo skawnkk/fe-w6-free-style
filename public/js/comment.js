@@ -7,81 +7,77 @@ import {
 } from "./utill.js";
 
 import {
+   variableGrouping
+} from "./variables.obj.js";
+
+import {
    black,
    white
 } from "../img/bookmark.js";
 
-const sendData = (id, comment, keep, page) => {
+const sendData = (id, comment, keep) => {
    const obj = {
       '_id': id,
       'save': keep,
       'comment': comment
    }
 
-   const url = `http://localhost:3000/comment/${page}`;
+   const url = `http://localhost:3000/comment/save`;
    sendAjax('POST', url, obj, null);
 }
 
-const switchBookMark = (bookmark) => {
-   const targetCard = bookmark.closest('.card_tpl')
-   const id = targetCard.id;
+const switchBookMark = (variables) => {
+   console.log(variables)
+   const cardId = variables.card.id;
+   const bookmark = variables.bookmark;
    let comment;
-   if (_.$('.input_memo input', targetCard)) {
-      comment = _.$('.input_memo input', targetCard).value;
-   } else comment = null;
+
+   if (variables.inputWindow) comment = variables.inputWindow.value;
 
    const bookmarkClass = bookmark.firstElementChild.attributes.class.value;
-
    (bookmarkClass === 'black') ? changeWhiteUnSave(): changeBlackSave();
 
    function changeBlackSave() {
       bookmark.innerHTML = black;
-      sendData(id, comment, true, 'save')
+      sendData(cardId, comment, true)
    }
 
    function changeWhiteUnSave() {
       bookmark.innerHTML = white;
-      sendData(id, comment, false, 'save')
+      sendData(cardId, comment, false)
    }
-
 }
 
-const commentSave = (inputMode) => {
-   const targetCard = inputMode.closest('.card_tpl')
-   const targetSaveBtn = _.$('.save_btn', targetCard);
-   const targetShowMode = _.$('.show_memo', targetCard);
-   const targetBookmark = _.$('.bookmark', targetCard);
-   const targetInputMode = inputMode;
-   targetSaveBtn.addEventListener('click', () => {
-      switchBookMark(targetBookmark);
+const commentSave = (variables) => {
+   if (variables.saveBtn === null) variables.saveBtn = _.$('.save_btn', variables.card);
+   variables.saveBtn.addEventListener('click', () => {
+      switchBookMark(variables);
 
-      targetShowMode.innerText = _.$('input', inputMode).value;
-      targetShowMode.classList.remove('under');
-      targetInputMode.classList.add('hide');
+      variables.showWindow.innerText = variables.inputWindow.value;
+      variables.showWindow.classList.remove('under');
+      variables.inputWindow.classList.add('hide');
    })
 }
 
-const switchMode = (target) => {
-   const parents = target.closest('.memo');
-   const showMode = target;
-   let inputMode;
-   if (parents.children.length === 1) {
-      inputMode = _.create('div')
-      inputMode.className = "input_memo";
-      inputMode.innerHTML =
-         `<input type="text">
-      <div class="save_btn" type="button">save</div>`;
-      parents.insertBefore(inputMode, showMode);
-      showMode.innerText = ''
+const switchMode = (variables) => {
+
+   if (!variables.inputWindow) {
+      const newInputNode = _.create('div')
+      newInputNode.className = "input_memo";
+      newInputNode.innerHTML =
+         `<input type="text"></input>
+         <div class="save_btn" type="button">save</div>`;
+      const parent = variables.showWindow.parentNode;
+      parent.insertBefore(newInputNode, variables.showWindow);
+      variables.showWindow.innerText = ''
+      variables.inputWindow = newInputNode.firstElementChild;
+   } else {
+      variables.inputWindow.firstElementChild.value = variables.showWindow.innerText;
+      variables.showWindow.classList.add('under');
+      variables.inputWindow.classList.remove('hide');
    }
 
-   commentSave(inputMode);
-   //!이미댓글이 있는 경우에 대한 처리
-   // else {
-   //    const inputMode = parents.children[1];
-   //    console.log(inputMode)
-   // }
-
+   commentSave(variables);
 }
 
 const saveThruSaveBtn = () => {
@@ -91,7 +87,8 @@ const saveThruSaveBtn = () => {
       memoInit.addEventListener('dblclick', ({
          target
       }) => {
-         switchMode(target)
+         const variables = variableGrouping(target)
+         switchMode(variables)
       })
    })
 }
@@ -101,11 +98,10 @@ const saveThruBookmark = () => {
    Bookmarks.forEach(el => el.addEventListener('click', ({
       target
    }) => {
-      const bookmark = target.closest('.bookmark')
-      switchBookMark(bookmark)
+      const variables = variableGrouping(target)
+      switchBookMark(variables)
    }))
 }
-
 
 export const commentCtrl = () => {
    saveThruSaveBtn()
