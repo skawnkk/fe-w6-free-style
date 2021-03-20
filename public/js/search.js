@@ -7,6 +7,9 @@ import {
 import {
    sendAjax
 } from "./send.ajax.js";
+import {
+   refreshWindow
+} from "./refresh.js";
 
 export const searchEvent = () => {
    const searchWindow = _.$('.search_window');
@@ -22,6 +25,7 @@ export const searchEvent = () => {
    })
 
    searchBtn.addEventListener('click', () => {
+      refreshWindow();
       const inputData = searchWindow.value;
       const url = 'http://localhost:3000/news/naver_news';
       sendAjax('POST', url, inputData, makeCard);

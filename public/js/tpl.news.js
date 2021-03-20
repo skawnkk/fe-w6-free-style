@@ -4,14 +4,15 @@ import {
 import {
    black,
    white
-} from "./img/bookmark.js";
+} from "../img/bookmark.js";
 
 export function makeCard(arr) {
    const bookmark = (arr.keep === true) ? black : white;
    const comment = (arr.comment !== '') ? arr.comment : '◌ Double click here to memo ◌';
    const paste_section = _.$('.naver_news');
    const tpl =
-      `<div class="card_tpl">
+      `
+      <div class="card_tpl" id=${arr._id} draggable='true'>
          <div class="clearfix">
             ${bookmark}
          </div>
@@ -23,7 +24,7 @@ export function makeCard(arr) {
          <div class="memo">
           <div class="show_memo">${comment}</div>
          </div>
-        
-      </div>`
+      </div>
+      `
    paste_section.insertAdjacentHTML('AfterBegin', tpl);
 }

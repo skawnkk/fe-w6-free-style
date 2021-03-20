@@ -29,32 +29,26 @@ router.post('/naver_news', async (req, res) => {
                acc += curr
                return acc
             }, '')
+
             const obj = {
-               'target': req.body.value,
+               'search': req.body.value,
                'title': $bodyInfo[i].attribs.title,
-               'link': $bodyInfo[i].attribs.href,
+               'href': $bodyInfo[i].attribs.href,
                'img': $bodyImg[i].attribs.src,
                'desc': redesignDesc
             };
-            resultArr.push(obj);
+            const result = await News.exists({
+               href: $bodyInfo[i].attribs.href
+            })
+            console.log(result)
+            if (result === false) resultArr.push(obj);
          }
-         //res.json(resultArr)
-         //*DB작업
-         for (let i = 0; i < resultArr.length; i++) {
-            const news = new News({
-               search: resultArr[i].target,
-               title: resultArr[i].title,
-               href: resultArr[i].link,
-               img: resultArr[i].img,
-               desc: resultArr[i].desc,
-            });
-            news.save();
-         }
+
+         await News.create(resultArr)
 
          const targetCard = await News.find({
-            search: resultArr[0].target
-         })
-
+            search: req.body.value
+         }).exec()
          res.json(targetCard)
       })
    } catch (err) {
@@ -63,6 +57,5 @@ router.post('/naver_news', async (req, res) => {
       })
    }
 })
-
 
 module.exports = router;
