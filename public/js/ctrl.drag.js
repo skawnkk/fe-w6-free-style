@@ -5,7 +5,6 @@ import {
 var dragSrcEl = null;
 
 function handleDragStart(e) {
-   console.log('start')
    dragSrcEl = e.target;
    dragSrcEl.style.opacity = '0.4';
 
@@ -13,18 +12,13 @@ function handleDragStart(e) {
    e.dataTransfer.setData('text/html', dragSrcEl.innerHTML);
 }
 
-
 function handleDragOver(e) {
-   console.log('over')
    if (e.preventDefault) {
       e.preventDefault();
    }
-
    e.dataTransfer.dropEffect = 'move';
-
    return false;
 }
-
 
 function handleDragEnter({
    target
@@ -35,20 +29,15 @@ function handleDragEnter({
 function handleDragLeave({
    target
 }) {
-   console.log('leave')
    target.classList.remove('over');
 }
 
 function handleDrop(e) {
-   console.log('drop')
-   console.log(e)
    if (e.stopPropagation) {
-      console.log(1)
       e.stopPropagation(); // stops the browser from redirecting.
    }
-   console.log(this)
+
    if (dragSrcEl != this) {
-      console.log(2)
       dragSrcEl.innerHTML = this.innerHTML;
       this.innerHTML = e.dataTransfer.getData('text/html');
    }
@@ -59,11 +48,8 @@ function handleDrop(e) {
 function handleDragEnd({
    target
 }) {
-   console.log('end')
    target.style.opacity = '1';
 }
-
-
 
 export const dragAndDrop = () => {
    const draggables = _.$All('.card_tpl');

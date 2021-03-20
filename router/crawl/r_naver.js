@@ -7,6 +7,7 @@ const cheerio = require("cheerio");
 const News = require('../../model/main_schema');
 
 router.post('/naver_news', async (req, res) => {
+   console.log(req)
    var word = encodeURI(req.body.value);
    const url = `https://search.naver.com/search.naver?where=nexearch&sm=top_sug.pre&fbm=1&acr=1&acq=qkd&qdt=0&ie=utf8&query=${word}`;
    const resultArr = [];
@@ -46,6 +47,7 @@ router.post('/naver_news', async (req, res) => {
 
          await News.create(resultArr)
 
+         //->저장된정보랑 새로운 정보 합치는 부분
          const targetCard = await News.find({
             search: req.body.value
          }).exec()

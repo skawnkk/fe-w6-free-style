@@ -3,16 +3,16 @@ import {
 } from "./utill.js";
 import {
    dragAndDrop
-} from "./drag.js";
+} from "./ctrl.drag.js";
 import {
-   commentCtrl
-} from "./comment.js";
+   saveCtrl
+} from "./ctrl.save.js";
 
 export const observeNode = () => {
    const mutationTarget = _.$('.naver_news');
    const observer = new MutationObserver(() => {
       dragAndDrop();
-      commentCtrl();
+      saveCtrl();
    })
 
    const config = {
