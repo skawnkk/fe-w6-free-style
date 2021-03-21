@@ -3,6 +3,7 @@ export const requestfetch = async (METHOD, url, data, func) => {
    let dataForm = {
       'value': data,
    }
+
    if (METHOD === 'POST') {
       requestData = await fetch(url, {
          method: METHOD,

@@ -5,6 +5,7 @@ import {
 var dragSrcEl = null;
 
 function handleDragStart(e) {
+
    dragSrcEl = e.target;
    dragSrcEl.style.opacity = '0.4';
 
@@ -20,21 +21,9 @@ function handleDragOver(e) {
    return false;
 }
 
-function handleDragEnter({
-   target
-}) {
-   target.classList.add('over');
-}
-
-function handleDragLeave({
-   target
-}) {
-   target.classList.remove('over');
-}
-
 function handleDrop(e) {
    if (e.stopPropagation) {
-      e.stopPropagation(); // stops the browser from redirecting.
+      e.stopPropagation();
    }
 
    if (dragSrcEl != this) {
@@ -54,8 +43,6 @@ function handleDragEnd({
 export const dragAndDrop = () => {
    const draggables = _.$All('.card_tpl');
    draggables.forEach(el => el.addEventListener('dragstart', handleDragStart, false))
-   draggables.forEach(el => el.addEventListener('dragenter', handleDragEnter, false))
-   draggables.forEach(el => el.addEventListener('dragleave', handleDragLeave, false))
    draggables.forEach(el => el.addEventListener('dragover', handleDragOver, false))
    draggables.forEach(el => el.addEventListener('drop', handleDrop, false))
    draggables.forEach(el => el.addEventListener('dragend', handleDragEnd, false))

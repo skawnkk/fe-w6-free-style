@@ -34,7 +34,6 @@ const showInputToggleMode = ({
 }) => {
    showWindow.classList.toggle('hide');
    inputWindow.classList.toggle('hide');
-   saveBtn.classList.toggle('hide');
 }
 
 const switchBookMark = ({
@@ -43,9 +42,7 @@ const switchBookMark = ({
    inputWindow
 }) => {
    const cardId = card.id;
-   let comment;
-
-   if (inputWindow) comment = inputWindow.value;
+   let comment = inputWindow.firstElementChild.value;
 
    const bookmarkClass = bookmark.firstElementChild.attributes.class.value;
    (bookmarkClass === 'black') ? changeWhiteUnSave(): changeBlackSave();
