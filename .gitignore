@@ -1,0 +1,6 @@
+node_modules/
+
+variables.env
+/public/style/style.css
+/public/style/reset.css
+package-lock.json
