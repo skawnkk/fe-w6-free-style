@@ -5,11 +5,11 @@ import {
    black,
    white
 } from "../img/bookmark.js";
-
+export const commentExplain = '◌ Double click here to memo ◌';
 export function makeCard(arr) {
 
    const bookmark = (arr.keep === true) ? black : white;
-   const comment = (arr.comment === "" || arr.comment === null) ? '◌ Double click here to memo ◌' : arr.comment;
+   const comment = (arr.comment === "" || arr.comment === null) ? commentExplain : arr.comment;
    const paste_section = _.$('.naver_news');
    const tpl =
       `

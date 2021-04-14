@@ -2,7 +2,7 @@ import {
    _
 } from "./utill.js";
 
-var dragSrcEl = null;
+let dragSrcEl = null;
 
 function handleDragStart(e) {
 
@@ -42,8 +42,10 @@ function handleDragEnd({
 
 export const dragAndDrop = () => {
    const draggables = _.$All('.card_tpl');
-   draggables.forEach(el => el.addEventListener('dragstart', handleDragStart, false))
-   draggables.forEach(el => el.addEventListener('dragover', handleDragOver, false))
-   draggables.forEach(el => el.addEventListener('drop', handleDrop, false))
-   draggables.forEach(el => el.addEventListener('dragend', handleDragEnd, false))
+   draggables.forEach(el => {
+      el.addEventListener('dragstart', handleDragStart, false)
+      el.addEventListener('dragover', handleDragOver, false)
+      el.addEventListener('drop', handleDrop, false)
+      el.addEventListener('dragend', handleDragEnd, false)
+   })
 }

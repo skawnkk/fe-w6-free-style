@@ -14,6 +14,10 @@ import {
    black,
    white
 } from "../img/bookmark.js";
+import {
+   commentExplain
+} from "./make.cardtpl.js"
+
 let variables;
 
 const sendData = (id, comment, keep) => {
@@ -75,8 +79,8 @@ const switchMode = ({
    showWindow,
    inputWindow
 }) => {
-   let value = showWindow.innerText;
-   inputWindow.firstElementChild.value = (value === '◌ Double click here to memo ◌') ? '' : value;
+   const value = showWindow.innerText;
+   inputWindow.firstElementChild.value = (value === commentExplain) ? '' : value;
    showInputToggleMode(variables);
 
    const parent = showWindow.parentNode;

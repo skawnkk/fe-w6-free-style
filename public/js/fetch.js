@@ -5,20 +5,29 @@ export const requestfetch = async (METHOD, url, data, func) => {
    }
 
    if (METHOD === 'POST') {
-      requestData = await fetch(url, {
-         method: METHOD,
-         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-         },
-         body: JSON.stringify(dataForm)
-      });
+      try {
+         requestData = await fetch(url, {
+            method: METHOD,
+            headers: {
+               'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(dataForm)
+         });
+      } catch (err) {
+         console.error(err);
+      }
    } else {
-      requestData = await fetch(url, {
-         method: METHOD,
-         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-         },
-      });
+      try {
+         requestData = await fetch(url, {
+            method: METHOD,
+            headers: {
+               'Content-Type': 'application/json;charset=utf-8'
+            },
+         });
+      } catch (err) {
+         console.error(err);
+      }
+
    }
    let response = await requestData.json();
    response.forEach(func);
